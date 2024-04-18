@@ -1,0 +1,20 @@
+{% extends 'admin/a_base.html' %}
+{% block content %}
+{{ super() }}
+
+<h4>Content. User id: {{ user_id }}</h4>
+{% for i in content %}
+{% if 'id' in i %}
+<p>
+    id: {{ i['id'] }} | 
+    date: {{ i['date'] }} | 
+    post: {{ i['post'] }} | 
+
+</p>
+<p>{{ i['text'] }}</p>
+<hr />
+{% endif %}
+{% endfor %}
+
+
+{% endblock %}

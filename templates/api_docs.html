@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API docs</title>
+    <style>
+      body {
+        background: rgb(193, 189, 139);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <details>
+        <summary>================ help</summary>
+        Добавление элементов: указать id=0</br>
+        При добавлении сразу можно задать какие либо параметры</br>
+        Если параметры перечисляются через ' + ' значит указать надо ВСЕ</br>
+        Если через ' , ' то можно указать все, некоторые или ни одного</br>
+        В скобках параметров ' (0 | 1) ' указаны допустимые значения</br>
+        ' ? ' перед параметром означает, что он опциональный</br>
+      </details>
+    </div>
+
+    <hr />
+
+    <div class="admin">#[ ]
+      <h4>Admin api</h4>
+      <div>
+        <details>
+          <summary>================ login logout</summary>
+          <p>
+            <b>/api/admin/login</b><br />
+            # login admin<br />
+            <b>POST</b><br />
+            <b>Form:</b> admin + psw<br />
+          </p>
+          <p>
+            <b>/api/admin/logout</b><br />
+            # logout admin<br />
+            <b>GET</b><br />
+          </p>
+          <p>
+            <b>/api/admin/settings</b> <br />
+            # status login admin <br />
+            <b>GET</b> <br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ user</summary>
+          <p>
+            <b>/api/admin/user</b><br />
+            # get all users<br />
+            <b>GET</b><br />
+          </p>
+          <p>
+            <b>/api/admin/user/{user_id}</b><br />
+            # get user <br />
+            <b>GET</b> <br />
+            # edit user<br />
+            <b>POST</b><br />
+            <b>Form:</b> <br />
+            exp_date(+int days), <br />
+            active(1 | 0), <br />
+            tokens(+/- int)<br />
+          </p>
+          <p>
+            <b>/api/admin/user/resetpsw</b><br />
+            # reset user password by email !!<br />
+            # admin must enter email manually !! <br />
+            <b>POST</b> <br />
+            <b>Form:</b> email<br />
+          </p>
+          <p>
+            <b>/api/admin/user/del</b><br />
+            # del user by email !!<br />
+            # admin must enter email manually !! <br />
+            <b>POST</b><br />
+            <b>Form:</b> email<br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ content</summary>
+          <p>
+            <b>/api/admin/user/{user_id}/content</b><br />
+            # get all user content<br />
+            <b>GET</b><br />
+            <b>Params:</b> prompt_id, limit + page <br>
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ prompt</summary>
+          <p>
+            <b>/api/admin/user/{user_id}/prompt</b><br />
+            # get all user prompt<br />
+            <b>GET</b><br />
+            <b>Params:</b> limit + page <br>
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ pf_list</summary>
+          <p>
+            <b>/api/admin/pflist</b><br />
+            # get all pf_list items<br />
+            <b>GET</b><br />
+            # add pf_list item<br />
+            <b>POST</b><br />
+            <b>Form:</b> name + type<br />
+          </p>
+          <p>
+            <b>/api/admin/pflist/del</b><br />
+            # del pf_list item by name<br />
+            <b>POST</b><br />
+            <b>Form:</b> name<br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ prompt mods</summary>
+          <p>
+            <b>/api/admin/pmods</b><br />
+            # get prompt mods<br />
+            <b>GET</b><br />
+            # edit mod by name<br />
+            <b>POST</b><br />
+            <b>Form:</b> name + value + ?column<br />
+            <pre>
+    name:
+      article
+      seo_article
+      table
+      chapter
+      seo_table
+      opts_base
+      language
+      style
+      html
+
+    column:
+      value   -default
+      default
+      note
+            </pre>
+          </p>
+        </details>
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="user">#[ ]
+      <h4>User api</h4>
+      <div>
+        <details>
+          <summary>================ reg login logout</summary>
+          <p>password valid chars: <b>a-zA-Z0-9_.!@#$&</b></p>
+          <p>
+            <b>/api/user/register</b><br />
+            # register user with email and psw<br />
+            <b>POST</b><br />
+            <b>Form:</b> email + psw + psw2<br />
+          </p>
+          <p>
+            <b>/api/user/login</b><br />
+            # login user and return cookie<br />
+            <b>POST</b><br />
+            <b>Form:</b> email + psw + ?remember<br />
+          </p>
+          <p>
+            <b>/api/user/resetpsw</b> <br />
+            # reset password by email <br />
+            # sends link to email <br />
+            <b>POST</b> <br />
+            <b>Form:</b> email <br />
+          </p>
+          <p>
+            <b>/api/user/newpsw</b> <br />
+            # set new password <br />
+            <b>POST</b> <br />
+            <b>Form:</b> psw + newpsw <br />
+          </p>
+          <p>
+            <b>/api/user/logout</b><br />
+            # logout user<br />
+            <b>GET</b><br />
+          </p>
+          <p>
+            <b>/api/user/settings</b><br />
+            # settings user<br />
+            <b>GET</b><br />
+          </p>
+          <p>
+            <b>/api/user/statistic</b><br />
+            # statistic user<br />
+            <b>GET</b><br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ prompt</summary>
+          <p>
+            <b>/api/user/prompt</b><br />
+            # get all prompts of current user<br />
+            <b>GET</b><br />
+            <b>Params:</b> limit + page <br>
+          </p>
+          <p>
+            <b>/api/user/prompt/{prompt_id}</b><br />
+            # get prompt<br />
+            <b>GET</b><br />
+            # add (prompt_id=0) / edit prompt<br />
+            <b>POST</b><br />
+            <b>Form:</b> name, template, topic_list, kw_list, post(false | {date}), params<br />
+          </p>
+          <pre>
+  params - JSON object with opional parameters (use only necessary)
+  {
+    "debug": false, [true]                   --debug mode: templates to content
+    "tokens": 4096,                          --set tokens limit (may raise exception)
+    "list_order": "normal" ["reverse" | "random"],    --pop order from topic_list
+    "language": "",                          --add language: russian, french...
+    "style": "",                             --add style: modern, creative...
+    "longread": false, [true]                --generate TOC and chapters
+    "html": false, [true]                    --add HTML markup
+    "pro": false, [true]                     --use template in shortread
+    "seo": false, [true]                     --add SEO keywords in shortread
+  }
+          </pre>
+          <p>
+            <b>/api/user/prompt/{prompt_id}/del</b><br />
+            # del prompt by prompt_id<br />
+            <b>POST</b><br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ prompt field</summary>
+          <p>
+            <b>/api/user/prompt/{prompt_id}/pfield</b><br />
+            # get all prompt fields<br />
+            <b>GET</b><br />
+            # add prompt field<br />
+            <b>POST</b><br />
+            <b>Form:</b> name(from route: /api/user/pflist) + ?value<br />
+            # value not used
+          </p>
+
+          <p>
+            <b>/api/user/prompt/{prompt_id}/pfield/{pfield_id}/del</b><br />
+            # del prompt field<br />
+            <b>POST</b><br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ pf_list</summary>
+          <p>
+            <b>/api/user/pflist</b><br />
+            # get all pf_list items<br />
+            <b>GET</b><br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ timetable</summary>
+          <p>
+            <b>/prompt/{prompt_id}/timetable</b><br />
+            # get all timetable<br />
+            <b>GET</b><br />
+            # add timetable<br />
+            <b>POST</b><br />
+            <b>Form:</b> day + hour + minute + timezone<br />
+            <br />
+          </p>
+          <p>
+            <b>/api/user/{prompt_id}/timetable/{timetable_id}/del</b><br />
+            # del timetable<br />
+            <b>POST</b><br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ content</summary>
+          <p>
+            <b>/api/user/content</b><br />
+            # get all content of current user<br />
+            <b>GET</b><br />
+            # without prompt_id return content for all prompts<br>
+            <b>Params:</b> prompt_id, limit + page <br>
+          </p>
+          <p>
+            <b>/api/user/content/count</b><br />
+            # get the number of user content<br />
+            <b>GET</b><br />
+            # without params return number of content for all prompts<br>
+            <b>Params:</b> prompt_id <br>
+          </p>
+          <p>
+            <b>/api/user/content/{content_id}</b><br />
+            # get content<br />
+            <b>GET</b><br />
+            # manually add content (content_id=0) / edit content<br />
+            <b>POST</b><br />
+            <b>Form:</b> title, text, post<br />
+          </p>
+          <p>
+            <b> /api/user/content/get_topic/{prompt_id}</b><br />
+            # return topic list generated with gpt_gen by prompt_id<br />
+            <b>POST</b><br />
+            <b>Form:</b> topic<br />
+          </p>
+          <p>
+            <b> /api/user/content/add_by/{prompt_id}</b><br />
+            # add content with gpt_gen by prompt_id<br />
+            <b>POST</b><br />
+          </p>
+          <p>
+            <b>/api/user/content/{content_id}/del</b><br />
+            # del content by content_id<br />
+            <b>POST</b><br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ content field</summary>
+          <p>
+            <b>/api/user/content/{content_id}/cfield</b><br />
+            # get all content fields<br />
+            <b>GET</b><br />
+          </p>
+          <p>
+            <b>/api/user/content/{content_id}/cfield/{cfield_id}</b><br />
+            # manually add content field (cfield_id=0) / edit content field<br />
+            <b>POST</b><br />
+            <b>Form:</b> name, value<br />
+          </p>
+          <p>
+            <b>/api/user/content/{content_id}/cfield/{cfield_id}/del</b><br />
+            # del content field<br />
+            <b>POST</b><br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ image prompt</summary>
+          <p>
+            <b>/api/user/iprompt</b><br />
+            # get all image prompts of current user<br />
+            <b>GET</b><br />
+          </p>
+          <p>
+            <b>/api/user/iprompt/{iprompt_id}</b><br />
+            # get image prompt<br />
+            <b>GET</b><br />
+            # add image prompt (iprompt_id=0) / edit image prompt<br />
+            <b>POST</b><br />
+            <b>Form:</b> name, size(256 | 512 | 1024), number(1-6), <br />
+            main, style, mod1..mod5 <br />
+          </p>
+          <p>
+            <b>/api/user/iprompt/{iprompt_id}/del</b><br />
+            # del image prompt<br />
+            <b>POST</b><br />
+          </p>
+        </details>
+      </div>
+      <div>
+        <details>
+          <summary>================ images add</summary>
+          <p>
+            <b>/api/user/content/{content_id}/images/add_by/{iprompt_id}</b
+            ><br />
+            # add images to cfield with name 'img' (max=6)<br />
+            <b>POST</b><br />
+          </p>
+          <p>
+            # delete image via route:<br />
+            # /api/user/content/{content_id}/cfield/{cfield_id}/del<br />
+          </p>
+        </details>
+        <br>
+        <br>
+      </div>
+    </div>
+  </body>
+</html>

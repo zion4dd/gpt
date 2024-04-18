@@ -1,0 +1,13 @@
+{% extends 'admin/a_base.html' %}
+{% block content %}
+{{ super() }}
+
+<h4>Image Prompt. User id: {{ user_id }}</h4>
+{% for i in iprompt %}
+{% for k in i.keys() %} {{ k }} : {{ i[k] }}<br>
+{% endfor %}<br>
+
+{% endfor %}
+
+
+{% endblock %}

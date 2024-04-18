@@ -1,0 +1,100 @@
+{% extends 'user/base.html' %} 
+{% block content %} 
+{{ super() }}
+
+<h4>Prompt edit</h4>
+{% for k in prompt.keys() %}
+<!-- hidden columns: -->
+{% if k not in ['id', 'prompt_id'] %}
+<p>{{ k }}:</p>
+<form
+    method="POST"
+    action="{{ url_for('user.prompt_edit', prompt_id=prompt['id']) }}"
+>
+    {% if k in ['template', 'topic_list', 'kw_list', 'params'] %}
+    <textarea name="{{ k }}" rows="4" cols="50">{{ prompt[k] }}</textarea>
+    {% else %}
+    <input type="text" name="{{ k }}" value="{{ prompt[k] }}" />
+    {% endif %}
+
+    <br />
+    <input type="submit" />
+</form>
+<hr />
+
+{% endif %} {% endfor %} 
+
+<pre>
+params - JSON object with opional parameters (use only necessary)
+    {
+    "debug": true,                          --debug mode: templates to content
+    "tokens": 2048,                         --set tokens limit (may raise exception)
+    "list_order": ["reverse" | "random"],   --pop order from topic_list
+    "language": "english",                  --add language
+    "style": "modern",                      --add style
+    "longread": true,                       --generate TOC and chapters
+    "pro": true,                            --use template in shortread
+    "html": true,                           --add HTML markup
+    }
+</pre>
+<hr>
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>name</th>
+        <th>type</th>
+        <th>value</th>
+    </tr>
+    {% for i in pfield %}
+    <tr>
+        <td>{{i['id']}}</td>
+        <td>{{i['name']}}</td>
+        <td>{{i['type']}}</td>
+        <td>{{i['value']}}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<p>
+    <a
+        href="{{ url_for('user.prompt_field', prompt_id=prompt['id']) }}"
+        ><button>Edit fields</button></a
+    >
+</p>
+<hr />
+<table border="1">
+    <tr>
+        <th>id</th>
+        <th>days</th>
+        <th>hours</th>
+        <th>minutes</th>
+        <th>timezone</th>
+    </tr>
+    {% for i in timetable %}
+    <tr>
+        <td>{{i['id']}}</td>
+        <td>{{i['day']}}</td>
+        <td>{{i['hour']}}</td>
+        <td>{{i['minute']}}</td>
+        <td>{{i['timezone']}}</td>
+    </tr>
+    {% endfor %}
+</table>
+<p>
+    <a
+        href="{{ url_for('user.timetable', prompt_id=prompt['id']) }}"
+        ><button>Edit timetable</button></a
+    >
+</p>
+<hr />
+<hr />
+<form id="delForm" action="{{ url_for('user.prompt_del') }}" method="post">
+    <input
+        type="hidden"
+        name="prompt_id"
+        value="{{ prompt['id'] }}"
+    />
+    <button type="submit">Delete</button>
+</form>
+
+{% endblock %}

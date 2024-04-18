@@ -1,0 +1,43 @@
+{% extends 'user/base.html' %} 
+{% block content %} 
+{{ super() }}
+
+<h4>Content</h4>
+
+<form action="{{ url_for('user.content_edit', content_id=0) }}" method="POST">
+    <input type="hidden" name="title" value="title">
+    <input type="hidden" name="text" value="text">
+    <input type="hidden" name="post" value="false">
+    <input type="submit" value="add empty">
+</form>
+<br>
+
+{% for i in content %}
+{% if 'id' in i %}
+<p>
+    id: {{ i['id'] }} | 
+    date: {{ i['date'] }} | 
+    post: {{ i['post'] }} | 
+
+    <a href="{{ url_for('user.content_edit', content_id=i['id']) }}"
+        ><button>Edit</button></a>
+</p>
+<p>{{ i['title'] }}</p>
+<p style="white-space: pre-wrap">{{ i['text'] }}</p>
+
+<b>Fields:</b><br>
+<br>
+{% for j in cfield_dict[i['id']] %}
+{% if j['name'] == 'img' %}
+{{ j['name'] }} : <a href="../images/{{ j['value'] }}">{{ j['value'] }}</a><br>
+{% else %}
+{{ j['name'] }} : {{ j['value'] }}<br>
+{% endif %}
+<br>
+{% endfor %}
+
+<hr />
+{% endif %}
+{% endfor %} 
+
+{% endblock %}

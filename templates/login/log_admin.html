@@ -1,0 +1,14 @@
+{% extends 'login/log_base.html' %}
+{% block content %}
+{{ super() }}
+
+<h3>Admin Login</h3>
+
+<form action="{{url_for('admin.login')}}" method="POST">
+    <p><input type="text" name="admin" placeholder="user" required></p>
+    <p><input type="password" name="psw" placeholder="password" required></p>
+    <p><input type="checkbox" name="remember">remember me</p>
+    <input type="submit">
+</form>
+
+{% endblock %}

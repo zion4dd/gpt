@@ -1,0 +1,57 @@
+{% extends 'user/base.html' %} 
+{% block content %} 
+{{ super() }}
+
+<h4>content</h4>
+<!-- content edit form -->
+<form
+    method="POST"
+    action="{{ url_for('user.content_edit', content_id=content['id']) }}">
+    <p>{{ content['date'] }}</p>
+    <p>Text:</p>
+    <p>
+        <textarea name="text" id="" cols="50" rows="15">
+{{ content['text'] }}</textarea>
+    </p>
+    <p>
+        <input type="text" name="post" value="{{ content['post'] }}"> post
+    </p>
+    <p><input type="submit" /></p>
+</form>
+<hr>
+<!-- generate images form -->
+<form method="POST" action="{{ url_for('user.images_add') }}">
+    <input type="hidden" name="content_id" value="{{ content['id'] }}" />
+    
+    <!-- select number of images -->
+    Select image prompt:
+    <select name="iprompt_id" id="">
+        {% for i in iprompt %}
+        <option value="{{ i['id'] }}">{{ i['name'] }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+    <button type="submit">Create images</button>
+</form>
+<br>
+<hr>
+<!-- content fields list with del button -->
+Note! 'DEL field' function uses API
+<p><b>Fields:</b></p>
+
+{% for i in cfield %}
+{{ i['name'] }} : {{ i['value'] }}
+<form method="POST" action="{{ url_for('api_user.cfield_del', content_id=content['id'], cfield_id=i['id']) }}">
+    <button type="submit">DEL field</button>
+</form>
+<br>
+{% endfor %}
+<br>
+<hr>
+<!-- delete content button -->
+<form id="delForm" action="{{ url_for('user.content_del') }}" method="POST">
+    <input type="hidden" name="content_id" value="{{ content['id'] }}" />
+    <button type="submit">Delete</button>
+</form>
+
+{% endblock %}

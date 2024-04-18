@@ -1,0 +1,22 @@
+{% extends 'admin/a_base.html' %}
+{% block content %}
+{{ super() }}
+
+<h4>Prompt. User id: {{ user_id }}</h4>
+{% for i in prompt %}
+{% if 'id' in i %}
+
+{% for k in i.keys() %} {{ k }} : {{ i[k] }}<br>
+{% endfor %}<br>
+
+<b>Fields:</b><br>
+
+{% for j in pfield_dict[i['id']] %}
+{{ j['name'] }} : {{ j['value'] }}<br>
+{% endfor %}
+
+{% endif %}
+{% endfor %}
+
+
+{% endblock %}

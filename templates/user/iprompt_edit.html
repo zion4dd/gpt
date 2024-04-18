@@ -1,0 +1,59 @@
+{% extends 'user/base.html' %} 
+{% block content %} 
+{{ super() }}
+
+<h4>Image Prompt edit</h4>
+{% for k in iprompt.keys() %}
+<!-- hidden columns: -->
+{% if k not in ['id', 'user_id'] %}
+<p>{{ k }}:</p>
+<form
+    method="POST"
+    action="{{ url_for('user.iprompt_edit', iprompt_id=iprompt['id']) }}">
+
+    <!-- texarea column main -->
+    {% if k in ['main'] %}
+    <textarea name="{{ k }}" rows="4" cols="50">{{ iprompt[k] }}</textarea>
+    <!-- select column size -->
+    {% elif k in ['size'] %}
+    {{ iprompt[k] }}
+    <select name="{{ k }}" id="">
+        <option {% if iprompt[k] == 256 %} selected="selected" {% endif %}>256</option>
+        <option {% if iprompt[k] == 512 %} selected="selected" {% endif %}>512</option>
+        <option {% if iprompt[k] == 1024 %} selected="selected" {% endif %}>1024</option>
+    </select>
+    <!-- select column number -->
+    {% elif k in ['number'] %}
+    {{ iprompt[k] }}
+    <select name="{{ k }}" id="">
+        <option {% if iprompt[k] == 1 %} selected="selected" {% endif %}>1</option>
+        <option {% if iprompt[k] == 2 %} selected="selected" {% endif %}>2</option>
+        <option {% if iprompt[k] == 3 %} selected="selected" {% endif %}>3</option>
+        <option {% if iprompt[k] == 4 %} selected="selected" {% endif %}>4</option>
+        <option {% if iprompt[k] == 5 %} selected="selected" {% endif %}>5</option>
+        <option {% if iprompt[k] == 6 %} selected="selected" {% endif %}>6</option>
+    </select>
+    {% else %}
+    <!-- input columns -->
+    <input type="text" name="{{ k }}" value="{{ iprompt[k] }}" />
+    {% endif %}
+
+    <br />
+    <p><input type="submit" /></p>
+</form>
+<hr />
+
+{% endif %}
+{% endfor %} 
+
+<hr />
+<form id="delForm" action="{{ url_for('user.iprompt_del') }}" method="post">
+    <input
+        type="hidden"
+        name="iprompt_id"
+        value="{{ iprompt['id'] }}"
+    />
+    <button type="submit">Delete</button>
+</form>
+
+{% endblock %}

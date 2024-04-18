@@ -1,0 +1,20 @@
+{% extends 'admin/a_base.html' %}
+{% block content %}
+{{ super() }}
+
+
+{% for i in mods %}
+
+{{ i['name'] }} <br>
+Note: {{ i['note'] }} <br>
+Default: {{ i['default'] }} <br>
+<form method="POST" action="{{ url_for('admin.prompt_mods') }}">
+    <input type="hidden" name="name" value="{{ i['name'] }}">
+    <textarea name="value" id="" cols="50" rows="3" placeholder="{{ i['default'] }}">{{ i['value'] }}</textarea>
+    <br>
+    <input type="submit" name="" id="">
+</form>
+<hr>
+{% endfor %}
+
+{% endblock %}

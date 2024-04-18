@@ -1,0 +1,24 @@
+{% extends 'admin/a_base.html' %}
+{% block content %}
+{{ super() }}
+
+<!-- add to prompt field list -->
+<form action="{{url_for('admin.pf_list')}}" method="POST">
+    <p><input type="text" name="name" placeholder="Name"></p>
+    <p><input type="text" name="type" placeholder="Type"><br></p>
+    <p><input type="submit" value="Add field"></p>
+</form>
+<hr>
+{% for i in pf_list %}
+<p>
+    {% for k in i.keys() %}
+    {{ k }} : {{ i[k] }} | 
+    {% endfor %}
+    <!-- delete from prompt field list -->
+    <form action="{{url_for('admin.pf_list_del')}}" method="POST">
+        <input type="hidden" name="name" value="{{ i['name'] }}">
+        <input type="submit" value="Del">
+    </form>
+</p>
+{% endfor %}
+{% endblock %}

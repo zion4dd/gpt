@@ -1,0 +1,25 @@
+{% extends 'user/base.html' %} 
+{% block content %} 
+{{ super() }}
+
+<h4>Image Prompt</h4>
+<form action="{{ url_for('user.iprompt_add') }}" method="post">
+    <input type="hidden" />
+    <button type="submit">Add image prompt</button>
+</form>
+<hr />
+
+{% for i in iprompt %}
+{% for k in i.keys() %} 
+{{ k }} : {{ i[k] }}<br>
+{% endfor %}<br>
+<p>
+    <a href="{{ url_for('user.iprompt_edit', iprompt_id=i['id']) }}"
+        ><button>Edit</button></a
+    >
+</p>
+
+<hr />
+{% endfor %}
+
+{% endblock %}

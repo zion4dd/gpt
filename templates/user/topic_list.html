@@ -1,0 +1,11 @@
+{% extends 'user/base.html' %} 
+{% block content %} 
+{{ super() }}
+
+<h4>Topic list</h4>
+
+{% for i in topic_list %}
+{{ i }}<br>
+{% endfor %}
+
+{% endblock %}

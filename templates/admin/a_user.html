@@ -1,0 +1,42 @@
+{% extends 'admin/a_base.html' %}
+{% block content %}
+{{ super() }}
+
+<form action="" method="POST">
+    <input type="input" name="email" value="" placeholder="input user email">
+    <input type="submit" formaction="{{ url_for('api_admin.reset_psw') }}" value="Reset psw">
+    <input type="submit" formaction="{{ url_for('admin.user_del') }}" value="User del">
+</form>
+<hr>
+<form action="{{ url_for('admin.user', user=u['id']) }}" method="POST">
+    user: {{ u['email'] }}
+    <input type="hidden" name="user_id" value="{{ u['id'] }}"><br>
+    {{ u['tokens'] }}<br>
+    <input type="text" name="tokens" value="0"> +/- tokens<br>
+    {{ u['exp_date'] }}<br>
+    <input type="text" name="exp_date" value="0"> + days from today<br>
+    <br>
+    <input type="checkbox" name="active" value="1" {% if u['active'] == 1 %} checked {% endif %}>Active
+    <input type="hidden" name="active" value="0">
+    <input type="submit">
+</form>
+
+<p>
+    <a href="{{ url_for('admin.content', user_id=u['id']) }}"><button>Content</button></a>
+    <a href="{{ url_for('admin.prompt', user_id=u['id']) }}"><button>Prompt</button></a>
+    <a href="{{ url_for('admin.iprompt', user_id=u['id']) }}"><button>Img Prompt</button></a>
+</p>
+
+<hr>
+{% for i in users %}
+
+{% for k in i.keys() %}
+{{ k }} : {{ i[k] }} | 
+{% endfor %}<br>
+
+<a href="{{ url_for('admin.user', user=i['id']) }}"><button>edit</button></a><br><br>
+
+{% endfor %}
+<hr>
+
+{% endblock %}
